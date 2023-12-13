@@ -1,6 +1,4 @@
-const offSet = 0
-const limit = 10
-const url = `https://pokeapi.co/api/v2/pokemon?offset=${offSet}&limit=${limit}` 
+
 
 function pokemonToHTML(pokemon){
     return `
@@ -21,8 +19,36 @@ function pokemonToHTML(pokemon){
 
 const pokemonList = document.querySelector('#pokemonList')
 
-pokeApi.getPokemons().then((pokemons = []) => { 
-    
-    pokemonList.innerHTML += pokemons.map(pokemonToHTML).join(' ')
+function loadPokemon(offSet, limit){
 
+    pokeApi.getPokemons(offSet, limit).then((pokemons = []) => { 
+        
+        const newHtml  = pokemons.map(pokemonToHTML).join(' ')
+        pokemonList.innerHTML += newHtml
+
+    })
+}
+
+const maxRecords = 905
+const limit = 10
+let offSet = 0
+
+
+loadPokemon( offSet, limit)
+
+
+const loadMoreButton = document.querySelector('#loadMoreButton')
+
+loadMoreButton.addEventListener('click',() =>{
+    offSet += limit
+    const qtdRecordsWithNexPage = offSet + limit
+
+    if (qtdRecordsWithNexPage >= maxRecords) {
+        const newLimit = maxRecords - offSet
+        loadPokemon(offSet, newLimit)
+
+        loadMoreButton.parentElement.removeChild(loadMoreButton)
+    } else {
+        loadPokemon(offSet, limit)
+    }
 })
