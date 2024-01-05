@@ -13,6 +13,7 @@ function pokemonToHTML(pokemon){
                      alt="${pokemon.name}">
             </div>
         </li>
+        
     `
 }
 

@@ -11,7 +11,7 @@ body {
     background-color: #FFF;
     height: 100vh;
     padding: 1rem;
-    width: 100vw;
+    max-width: 800px;
     
 }
 
